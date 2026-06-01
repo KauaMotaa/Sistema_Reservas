@@ -1,8 +1,8 @@
-# Bancos SQLite (nao precisa versionar)
+
 banco.db
 teste_banco.db
 
-# Cache do Python e do pytest
+
 __pycache__/
 *.pyc
 .pytest_cache/
