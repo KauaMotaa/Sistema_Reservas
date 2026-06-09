@@ -7,12 +7,14 @@ from fastapi.testclient import TestClient
 from app.main import app
 from app.DataBaseConfig.database import Base, get_db
 
-SQLALCHEMY_TEST_DATABASE_URL = os.getenv(
-    "TEST_DATABASE_URL", 
-    "postgresql://postgres:postgres@db_test:5432/test_db"
-)
 
-# O connect_args so e necessario para SQLite; no Postgres fica vazio
+TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
+
+
+if not TEST_DATABASE_URL:
+    TEST_DATABASE_URL = "postgresql://postgres:postgres@db_test:5432/test_db"
+
+
 connect_args = {"check_same_thread": False} if TEST_DATABASE_URL.startswith("sqlite") else {}
 engine_teste = create_engine(TEST_DATABASE_URL, connect_args=connect_args)
 SessionTeste = sessionmaker(autocommit=False, autoflush=False, bind=engine_teste)
